@@ -1,10 +1,20 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
 import { rules } from "../utils/rules";
+import { useDispatch } from "react-redux";
+import { AuthActionsCreators } from "../store/reducers/auth/action-creators";
 
 const LoginForm: React.FC = () => {
+
+  const dispatch = useDispatch()
+
+  const handleSubmit = () => {
+      dispatch(AuthActionsCreators.login("", ""))
+  }
+
+
   return (
-    <Form>
+    <Form onFinish={handleSubmit}>
       <Form.Item
         label="Username"
         name="username"
