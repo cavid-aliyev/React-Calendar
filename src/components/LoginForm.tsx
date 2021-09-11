@@ -1,26 +1,28 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
 import { rules } from "../utils/rules";
-import { useDispatch } from "react-redux";
-import { AuthActionsCreators } from "../store/reducers/auth/action-creators";
+import { useTypedSelector } from "../hooks/userTypedSelector";
+import { useActions } from "../hooks/useActions";
 
 const LoginForm: React.FC = () => {
-
-  const dispatch = useDispatch()
+  const { error, isLoading } = useTypedSelector((state) => state.authReducer);
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const { login } = useActions();
 
   const handleSubmit = () => {
-      dispatch(AuthActionsCreators.login("", ""))
-  }
-
+    login(username, password);
+  };
 
   return (
     <Form onFinish={handleSubmit}>
+      {error && <div style={{ color: "red" }}>{error}</div>}
       <Form.Item
         label="Username"
         name="username"
         rules={[rules.required("Please input your username")]}
       >
-        <Input />
+        <Input value={username} onChange={(e) => setUsername(e.target.value)} />
       </Form.Item>
 
       <Form.Item
@@ -28,10 +30,14 @@ const LoginForm: React.FC = () => {
         name="password"
         rules={[rules.required("Please input your pass")]}
       >
-        <Input />
+        <Input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+        />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={isLoading}>
           Enter
         </Button>
       </Form.Item>
