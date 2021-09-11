@@ -14,7 +14,7 @@ const App: React.FC = () => {
       setUser({ username: localStorage.getItem("username" || "") } as IUser);
       setIsAuth(true);
     }
-  }, []);
+  }, [setIsAuth, setUser]);
 
   return (
     <Layout>
