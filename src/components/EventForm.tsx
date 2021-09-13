@@ -9,6 +9,7 @@ import { rules } from "../utils/rules";
 
 interface EventFormProps {
   guests: IUser[];
+  submit: (event: IEvent) => void;
 }
 
 const EventForm: React.FC<EventFormProps> = (props) => {
@@ -28,7 +29,7 @@ const EventForm: React.FC<EventFormProps> = (props) => {
   };
 
   const submitForm = () => {
-    console.log(event);
+    props.submit({ ...event, author: user.username });
   };
 
   return (
@@ -43,7 +44,14 @@ const EventForm: React.FC<EventFormProps> = (props) => {
           onChange={(e) => setEvent({ ...event, description: e.target.value })}
         />
       </Form.Item>
-      <Form.Item label="Data action" name="date" rules={[rules.required()]}>
+      <Form.Item
+        label="Data action"
+        name="date"
+        rules={[
+          rules.required(),
+          rules.isDateAfter("U cant create event on passed dates"),
+        ]}
+      >
         <DatePicker onChange={(date) => selectDate(date)} />
       </Form.Item>
       <Form.Item label="Select guest" name="guest" rules={[rules.required()]}>
