@@ -3,7 +3,7 @@ import {EventAction, EventActionEnum, EventState} from "./types";
 
 const initialState: EventState = {
     events: [],
-    guests: []
+    guests: [],
 }
 
 export default function EventReducer(state = initialState, action: EventAction): EventState {

@@ -7,5 +7,7 @@ const rootReducer = combineReducers(allReducers);
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export type RootState = ReturnType<typeof store.getState>;
-//dispatch type
+
+
+//dispatch type for thunks
 export type AppDispatch = typeof store.dispatch;
